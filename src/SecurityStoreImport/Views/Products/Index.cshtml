@@ -1,0 +1,83 @@
+@model ProductListViewModel
+@{
+    ViewData["Title"] = "Товары";
+}
+
+<h1>Товары</h1>
+
+@if (Model.TotalInCatalog == 0)
+{
+    <div class="box">
+        <p>Товаров пока нет. Загрузите CSV-файл на странице <a asp-action="Import">импорта</a>.</p>
+    </div>
+}
+else
+{
+    <form method="get" asp-action="Index" class="toolbar">
+        <input type="text" name="search" value="@Model.Search" placeholder="Название, бренд или артикул" />
+        <select name="system">
+            <option value="">Все системы</option>
+            @foreach (var type in ImportRules.SystemTypes)
+            {
+                <option value="@type" selected="@(Model.System == type)">@type</option>
+            }
+        </select>
+        <select name="sort">
+            <option value="">Без сортировки</option>
+            <option value="price_up" selected="@(Model.Sort == "price_up")">Цена по возрастанию</option>
+            <option value="price_down" selected="@(Model.Sort == "price_down")">Цена по убыванию</option>
+            <option value="stock_up" selected="@(Model.Sort == "stock_up")">Остаток по возрастанию</option>
+        </select>
+        <button type="submit" class="btn">Найти</button>
+        <a asp-action="Index" class="btn btn-light">Сбросить</a>
+        <span class="spacer"></span>
+        <a asp-action="Export" class="btn btn-light">Экспорт в CSV</a>
+    </form>
+
+    @if (Model.Products.Count == 0)
+    {
+        <div class="message message-info">По вашему запросу ничего не найдено.</div>
+    }
+    else
+    {
+        <table>
+            <thead>
+                <tr>
+                    <th>Артикул</th>
+                    <th>Название</th>
+                    <th>Система</th>
+                    <th>Категория</th>
+                    <th class="num">Цена</th>
+                    <th class="num">Остаток</th>
+                    <th>Активен</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var p in Model.Products)
+                {
+                    <tr>
+                        <td>@p.Sku</td>
+                        <td>
+                            <a asp-action="Details" asp-route-id="@p.Sku">@p.Name</a>
+                            <div class="small">@p.Brand @p.Model</div>
+                        </td>
+                        <td><span class="tag">@p.SystemType</span></td>
+                        <td>@p.CategoryName</td>
+                        <td class="num">@p.Price.ToString("N0") @p.Currency</td>
+                        <td class="num">@p.StockQuantity</td>
+                        <td class="@(p.IsActive ? "yes" : "no")">@(p.IsActive ? "Да" : "Нет")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <p>
+            Показано товаров: <b>@Model.Products.Count</b> из @Model.TotalInCatalog.
+            Общая стоимость остатков: <b>@Model.TotalValue.ToString("N0") ₽</b>
+        </p>
+    }
+
+    <form method="post" asp-action="Clear" onsubmit="return confirm('Очистить список товаров? Данные из памяти будут удалены.');">
+        <button type="submit" class="btn btn-red">Очистить список</button>
+    </form>
+}

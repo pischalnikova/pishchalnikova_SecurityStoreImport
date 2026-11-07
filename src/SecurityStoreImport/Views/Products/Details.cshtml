@@ -1,0 +1,24 @@
+@model Product
+@{
+    ViewData["Title"] = Model.Name;
+}
+
+<p><a asp-action="Index">← Назад к списку</a></p>
+
+<div class="box">
+    <h1>@Model.Name</h1>
+    <span class="tag">@Model.SystemType</span>
+    <div class="price">@Model.Price.ToString("N2") @Model.Currency</div>
+    <p>@(Model.Description == "" ? "Описание отсутствует" : Model.Description)</p>
+
+    <dl class="details">
+        <dt>Артикул</dt><dd>@Model.Sku</dd>
+        <dt>Производитель</dt><dd>@Model.Brand</dd>
+        <dt>Модель</dt><dd>@(Model.Model == "" ? "—" : Model.Model)</dd>
+        <dt>Степень защиты</dt><dd>@(Model.IpRating == "" ? "—" : Model.IpRating)</dd>
+        <dt>Категория</dt><dd>@Model.CategoryName</dd>
+        <dt>Остаток на складе</dt><dd>@Model.StockQuantity шт.</dd>
+        <dt>В продаже</dt><dd>@(Model.IsActive ? "Да" : "Нет")</dd>
+        <dt>Изображение</dt><dd>@(Model.ImageUrl == "" ? "—" : Model.ImageUrl)</dd>
+    </dl>
+</div>

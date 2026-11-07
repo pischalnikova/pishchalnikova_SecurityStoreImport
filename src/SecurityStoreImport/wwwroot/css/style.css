@@ -1,0 +1,119 @@
+/* Оформление сайта «Гардиан — магазин оборудования безопасности» */
+
+body {
+    margin: 0;
+    font-family: "Segoe UI", Arial, sans-serif;
+    font-size: 15px;
+    color: #1f2933;
+    background: #f1f4f6;
+}
+
+a { color: #0b6e69; }
+
+.header {
+    background: #0b6e69;
+    color: #fff;
+}
+
+.header-inner, .content {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+}
+
+.logo { color: #fff; font-size: 20px; font-weight: bold; text-decoration: none; }
+.logo span { font-weight: normal; font-size: 14px; opacity: .8; margin-left: 8px; }
+
+.nav a {
+    color: #fff;
+    text-decoration: none;
+    margin-left: 22px;
+    padding-bottom: 4px;
+}
+.nav a:hover, .nav a.active { border-bottom: 2px solid #ffd166; }
+
+.content { padding-top: 24px; padding-bottom: 40px; }
+
+h1 { font-size: 24px; margin: 0 0 16px; }
+h2 { font-size: 18px; margin: 0 0 12px; }
+
+.box {
+    background: #fff;
+    border: 1px solid #dde3e8;
+    border-radius: 6px;
+    padding: 18px;
+    margin-bottom: 18px;
+}
+
+.toolbar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 16px; }
+.toolbar .spacer { flex: 1; }
+
+input[type=text], select {
+    padding: 7px 10px;
+    border: 1px solid #c5cdd4;
+    border-radius: 4px;
+    font: inherit;
+}
+input[type=text] { width: 260px; }
+
+.btn {
+    display: inline-block;
+    padding: 7px 14px;
+    border: 1px solid #0b6e69;
+    border-radius: 4px;
+    background: #0b6e69;
+    color: #fff;
+    font: inherit;
+    text-decoration: none;
+    cursor: pointer;
+}
+.btn:hover { background: #095a56; }
+.btn-light { background: #fff; color: #0b6e69; }
+.btn-light:hover { background: #e8f3f2; }
+.btn-red { background: #fff; color: #c0392b; border-color: #c0392b; }
+
+table { width: 100%; border-collapse: collapse; background: #fff; }
+th, td { padding: 8px 10px; border-bottom: 1px solid #e3e8ec; text-align: left; vertical-align: top; }
+th { background: #e8f3f2; font-weight: 600; }
+td.num, th.num { text-align: right; white-space: nowrap; }
+.small { color: #6b7780; font-size: 13px; }
+
+.tag { font-size: 13px; padding: 2px 8px; border-radius: 10px; background: #e8f3f2; color: #0b6e69; white-space: nowrap; }
+.yes { color: #1e8449; }
+.no { color: #95a0a8; }
+
+.result { width: auto; min-width: 340px; }
+.result td:last-child { text-align: right; font-weight: bold; }
+
+.message { padding: 10px 14px; border-radius: 4px; margin-bottom: 16px; }
+.message-ok { background: #e3f4e8; border: 1px solid #a9d8b6; }
+.message-error { background: #fdecea; border: 1px solid #f1b0a8; }
+.message-info { background: #fff8e1; border: 1px solid #f0d88a; }
+
+.row-error td:first-child { border-left: 4px solid #c0392b; }
+.row-warning td:first-child { border-left: 4px solid #e0a800; }
+
+.forms { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.forms .box { margin-bottom: 0; }
+.forms input[type=text] { width: 100%; box-sizing: border-box; margin-bottom: 10px; }
+.forms input[type=file] { margin-bottom: 10px; }
+
+.details { display: grid; grid-template-columns: 200px 1fr; }
+.details dt, .details dd { margin: 0; padding: 7px 0; border-bottom: 1px solid #e3e8ec; }
+.details dt { color: #6b7780; }
+.price { font-size: 22px; font-weight: bold; color: #0b6e69; margin: 6px 0 14px; }
+
+.footer { text-align: center; color: #95a0a8; font-size: 13px; padding: 20px 0; }
+
+@media (max-width: 800px) {
+    .forms { grid-template-columns: 1fr; }
+    .header-inner { flex-direction: column; height: auto; padding: 10px 20px; }
+    .nav a { margin: 0 10px; }
+}

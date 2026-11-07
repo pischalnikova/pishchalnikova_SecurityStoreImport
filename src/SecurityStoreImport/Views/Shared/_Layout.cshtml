@@ -1,0 +1,33 @@
+@{
+    var action = ViewContext.RouteData.Values["action"]?.ToString();
+}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewData["Title"] — Гардиан</title>
+    <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
+</head>
+<body>
+    <header class="header">
+        <div class="header-inner">
+            <a class="logo" asp-controller="Products" asp-action="Index">Гардиан<span>оборудование для систем безопасности</span></a>
+            <nav class="nav">
+                <a asp-controller="Products" asp-action="Index" class="@(action == "Index" ? "active" : "")">Товары</a>
+                <a asp-controller="Products" asp-action="Import" class="@(action == "Import" ? "active" : "")">Импорт из CSV</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="content">
+        @if (TempData["Notice"] is string notice)
+        {
+            <div class="message message-ok">@notice</div>
+        }
+        @RenderBody()
+    </main>
+
+    <footer class="footer">ГК «Гардиан», г. Пермь · Модуль импорта товаров из CSV · ПП.02.01</footer>
+</body>
+</html>

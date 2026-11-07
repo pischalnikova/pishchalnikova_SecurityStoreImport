@@ -1,0 +1,78 @@
+@model ImportPageModel
+@{
+    ViewData["Title"] = "Импорт из CSV";
+    var result = Model.Result; // результат последнего импорта или null
+}
+
+<h1>Импорт товаров из CSV</h1>
+
+<div class="forms">
+    <form class="box" method="post" asp-action="Import" enctype="multipart/form-data">
+        <h2>Загрузить файл</h2>
+        <input type="hidden" name="Mode" value="@ImportRequest.UploadMode" />
+        <input type="file" name="File" accept=".csv" /><br />
+        <button type="submit" class="btn">Загрузить и импортировать</button>
+    </form>
+
+    <form class="box" method="post" asp-action="Import">
+        <h2>Указать путь к файлу</h2>
+        <input type="hidden" name="Mode" value="@ImportRequest.PathMode" />
+        <input type="text" name="FilePath" value="@Model.FilePath" placeholder="/csv/samples/catalog.csv" />
+        <button type="submit" class="btn">Импортировать товары</button>
+        <p class="small">Путь от папки wwwroot или полный путь на диске. Пример: <b>/csv/samples/catalog.csv</b></p>
+    </form>
+</div>
+<br />
+
+@if (result != null)
+{
+    <div class="box">
+        <h2>Результат импорта @(result.FileName != "" ? "— " + result.FileName : "")</h2>
+
+        @if (result.ImportedCount > 0 && result.Errors.Count == 0)
+        {
+            <div class="message message-ok">Все строки загружены без ошибок.</div>
+        }
+        else if (result.ImportedCount == 0)
+        {
+            <div class="message message-error">Ни один товар не загружен.</div>
+        }
+
+        <table class="result">
+            <tr><th>Показатель</th><th>Значение</th></tr>
+            <tr><td>Всего строк</td><td>@result.TotalRows</td></tr>
+            <tr><td>Успешно импортировано</td><td>@result.ImportedCount</td></tr>
+            <tr><td>Ошибки</td><td>@result.ErrorCount</td></tr>
+            <tr><td>Предупреждения</td><td>@result.WarningCount</td></tr>
+            @if (result.Encoding != "")
+            {
+                <tr><td>Кодировка файла</td><td>@result.Encoding</td></tr>
+            }
+        </table>
+
+        @if (result.Errors.Count > 0)
+        {
+            <h2 style="margin-top:20px">Список ошибок</h2>
+            <table>
+                <tr><th>Строка</th><th>Колонка</th><th>Описание ошибки</th></tr>
+                @foreach (var error in result.Errors)
+                {
+                    <tr class="@(error.IsWarning ? "row-warning" : "row-error")">
+                        <td>@(error.RowNumber == 0 ? "—" : error.RowNumber.ToString())</td>
+                        <td>@(error.Column == "" ? "—" : error.Column)</td>
+                        <td>@(error.IsWarning ? "Предупреждение: " : "")@error.Message</td>
+                    </tr>
+                }
+            </table>
+        }
+
+        <p><a asp-action="Index" class="btn">Перейти к списку товаров</a></p>
+    </div>
+}
+
+<div class="box">
+    <h2>Формат файла</h2>
+    <p>Первая строка — заголовки. Разделитель <b>,</b> <b>;</b> или табуляция, кодировка UTF-8 или Windows-1251.</p>
+    <p class="small">sku, name, description, price, currency, category_name, stock, image_url, is_active, brand, system_type, model, ip_rating</p>
+    <p>Тестовые файлы лежат в папке <b>wwwroot/csv/samples</b>.</p>
+</div>
