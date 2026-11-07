@@ -3,22 +3,21 @@
     ViewData["Title"] = Model.Name;
 }
 
-<p><a asp-action="Index">← Назад к списку</a></p>
+<p><a asp-action="Index">← в каталог</a></p>
 
-<div class="box">
+<div class="panel">
+    <p class="hint">@Model.SystemType · @Model.CategoryName</p>
     <h1>@Model.Name</h1>
-    <span class="tag">@Model.SystemType</span>
-    <div class="price">@Model.Price.ToString("N2") @Model.Currency</div>
+    <div class="big-price">@Model.Price.ToString("N2") @Model.Currency</div>
     <p>@(Model.Description == "" ? "Описание отсутствует" : Model.Description)</p>
 
-    <dl class="details">
-        <dt>Артикул</dt><dd>@Model.Sku</dd>
-        <dt>Производитель</dt><dd>@Model.Brand</dd>
-        <dt>Модель</dt><dd>@(Model.Model == "" ? "—" : Model.Model)</dd>
-        <dt>Степень защиты</dt><dd>@(Model.IpRating == "" ? "—" : Model.IpRating)</dd>
-        <dt>Категория</dt><dd>@Model.CategoryName</dd>
-        <dt>Остаток на складе</dt><dd>@Model.StockQuantity шт.</dd>
-        <dt>В продаже</dt><dd>@(Model.IsActive ? "Да" : "Нет")</dd>
-        <dt>Изображение</dt><dd>@(Model.ImageUrl == "" ? "—" : Model.ImageUrl)</dd>
-    </dl>
+    <table class="props">
+        <tr><td>Артикул</td><td>@Model.Sku</td></tr>
+        <tr><td>Производитель</td><td>@Model.Brand</td></tr>
+        <tr><td>Модель</td><td>@(Model.Model == "" ? "—" : Model.Model)</td></tr>
+        <tr><td>Степень защиты</td><td>@(Model.IpRating == "" ? "—" : Model.IpRating)</td></tr>
+        <tr><td>Остаток на складе</td><td>@Model.StockQuantity шт.</td></tr>
+        <tr><td>В продаже</td><td>@(Model.IsActive ? "да" : "нет")</td></tr>
+        <tr><td>Изображение</td><td>@(Model.ImageUrl == "" ? "—" : Model.ImageUrl)</td></tr>
+    </table>
 </div>

@@ -1,83 +1,78 @@
 @model ProductListViewModel
 @{
-    ViewData["Title"] = "Товары";
+    ViewData["Title"] = "Каталог";
 }
 
-<h1>Товары</h1>
+@section Side {
+    @if (Model.TotalInCatalog > 0)
+    {
+        <form method="get" asp-action="Index">
+            <h3>Поиск</h3>
+            <input type="text" name="search" value="@Model.Search" placeholder="название, бренд, артикул" />
+
+            <h3>Тип системы</h3>
+            <label><input type="radio" name="system" value="" checked="@string.IsNullOrEmpty(Model.System)" /> Все</label>
+            @foreach (var type in ImportRules.SystemTypes)
+            {
+                <label><input type="radio" name="system" value="@type" checked="@(Model.System == type)" /> @type</label>
+            }
+
+            <h3>Сортировка</h3>
+            <select name="sort">
+                <option value="">как в файле</option>
+                <option value="price_up" selected="@(Model.Sort == "price_up")">сначала дешёвые</option>
+                <option value="price_down" selected="@(Model.Sort == "price_down")">сначала дорогие</option>
+                <option value="stock_up" selected="@(Model.Sort == "stock_up")">меньше на складе</option>
+            </select>
+
+            <button type="submit" class="btn">Показать</button>
+            <a asp-action="Index" class="btn btn-gray">Сброс</a>
+        </form>
+    }
+}
+
+<h1>Каталог товаров</h1>
+<p class="subtitle">Видеонаблюдение, охранная сигнализация, контроль доступа</p>
 
 @if (Model.TotalInCatalog == 0)
 {
-    <div class="box">
-        <p>Товаров пока нет. Загрузите CSV-файл на странице <a asp-action="Import">импорта</a>.</p>
+    <div class="panel">
+        <h2>Каталог пуст</h2>
+        <p>Чтобы товары появились, загрузите CSV-файл.</p>
+        <a asp-action="Import" class="btn">Перейти к импорту</a>
     </div>
 }
 else
 {
-    <form method="get" asp-action="Index" class="toolbar">
-        <input type="text" name="search" value="@Model.Search" placeholder="Название, бренд или артикул" />
-        <select name="system">
-            <option value="">Все системы</option>
-            @foreach (var type in ImportRules.SystemTypes)
-            {
-                <option value="@type" selected="@(Model.System == type)">@type</option>
-            }
-        </select>
-        <select name="sort">
-            <option value="">Без сортировки</option>
-            <option value="price_up" selected="@(Model.Sort == "price_up")">Цена по возрастанию</option>
-            <option value="price_down" selected="@(Model.Sort == "price_down")">Цена по убыванию</option>
-            <option value="stock_up" selected="@(Model.Sort == "stock_up")">Остаток по возрастанию</option>
-        </select>
-        <button type="submit" class="btn">Найти</button>
-        <a asp-action="Index" class="btn btn-light">Сбросить</a>
-        <span class="spacer"></span>
-        <a asp-action="Export" class="btn btn-light">Экспорт в CSV</a>
-    </form>
-
     @if (Model.Products.Count == 0)
     {
-        <div class="message message-info">По вашему запросу ничего не найдено.</div>
+        <div class="message message-info">Под условия поиска ничего не подходит.</div>
     }
-    else
-    {
-        <table>
-            <thead>
-                <tr>
-                    <th>Артикул</th>
-                    <th>Название</th>
-                    <th>Система</th>
-                    <th>Категория</th>
-                    <th class="num">Цена</th>
-                    <th class="num">Остаток</th>
-                    <th>Активен</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var p in Model.Products)
-                {
-                    <tr>
-                        <td>@p.Sku</td>
-                        <td>
-                            <a asp-action="Details" asp-route-id="@p.Sku">@p.Name</a>
-                            <div class="small">@p.Brand @p.Model</div>
-                        </td>
-                        <td><span class="tag">@p.SystemType</span></td>
-                        <td>@p.CategoryName</td>
-                        <td class="num">@p.Price.ToString("N0") @p.Currency</td>
-                        <td class="num">@p.StockQuantity</td>
-                        <td class="@(p.IsActive ? "yes" : "no")">@(p.IsActive ? "Да" : "Нет")</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
 
-        <p>
-            Показано товаров: <b>@Model.Products.Count</b> из @Model.TotalInCatalog.
-            Общая стоимость остатков: <b>@Model.TotalValue.ToString("N0") ₽</b>
-        </p>
-    }
+    <div class="cards">
+        @foreach (var p in Model.Products)
+        {
+            <div class="card system-@Array.IndexOf(ImportRules.SystemTypes, p.SystemType)">
+                <span class="sku">@p.Sku · @p.SystemType</span>
+                <a class="name" asp-action="Details" asp-route-id="@p.Sku">@p.Name</a>
+                <span class="brand">@p.Brand @p.Model · @p.CategoryName</span>
+                <div class="bottom">
+                    <span class="price">@p.Price.ToString("N0") @p.Currency</span>
+                    <span class="stock">
+                        на складе: @p.StockQuantity<br />
+                        @if (p.IsActive) { <span>в продаже</span> } else { <span class="off">не продаётся</span> }
+                    </span>
+                </div>
+            </div>
+        }
+    </div>
+
+    <p class="summary-line">
+        Показано @Model.Products.Count из @Model.TotalInCatalog.
+        Стоимость остатков: @Model.TotalValue.ToString("N0") ₽.
+    </p>
 
     <form method="post" asp-action="Clear" onsubmit="return confirm('Очистить список товаров? Данные из памяти будут удалены.');">
-        <button type="submit" class="btn btn-red">Очистить список</button>
+        <button type="submit" class="btn btn-gray">Очистить каталог</button>
     </form>
 }

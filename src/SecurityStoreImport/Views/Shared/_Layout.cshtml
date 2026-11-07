@@ -10,24 +10,31 @@
     <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
 </head>
 <body>
-    <header class="header">
-        <div class="header-inner">
-            <a class="logo" asp-controller="Products" asp-action="Index">Гардиан<span>оборудование для систем безопасности</span></a>
-            <nav class="nav">
-                <a asp-controller="Products" asp-action="Index" class="@(action == "Index" ? "active" : "")">Товары</a>
-                <a asp-controller="Products" asp-action="Import" class="@(action == "Import" ? "active" : "")">Импорт из CSV</a>
-            </nav>
-        </div>
-    </header>
+<div class="page">
+    <aside class="side">
+        <a class="logo" asp-controller="Products" asp-action="Index">
+            <b>ГАРДИАН</b>
+            <small>оборудование для систем безопасности</small>
+        </a>
 
-    <main class="content">
+        <nav class="menu">
+            <a asp-controller="Products" asp-action="Index" class="@(action == "Index" ? "active" : "")">Каталог товаров</a>
+            <a asp-controller="Products" asp-action="Import" class="@(action == "Import" ? "active" : "")">Импорт из CSV</a>
+            <a asp-controller="Products" asp-action="Export">Скачать каталог (CSV)</a>
+        </nav>
+
+        @await RenderSectionAsync("Side", required: false)
+
+        <div class="about">ГК «Гардиан», г. Пермь<br />Практика ПП.02.01</div>
+    </aside>
+
+    <main class="main">
         @if (TempData["Notice"] is string notice)
         {
             <div class="message message-ok">@notice</div>
         }
         @RenderBody()
     </main>
-
-    <footer class="footer">ГК «Гардиан», г. Пермь · Модуль импорта товаров из CSV · ПП.02.01</footer>
+</div>
 </body>
 </html>

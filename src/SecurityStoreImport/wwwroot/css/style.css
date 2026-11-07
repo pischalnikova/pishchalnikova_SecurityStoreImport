@@ -1,119 +1,134 @@
-/* Оформление сайта «Гардиан — магазин оборудования безопасности» */
+/* Оформление сайта «Гардиан — магазин оборудования безопасности».
+   Слева меню, справа содержимое; товары выводятся карточками. */
+
+* { box-sizing: border-box; }
 
 body {
     margin: 0;
-    font-family: "Segoe UI", Arial, sans-serif;
-    font-size: 15px;
-    color: #1f2933;
-    background: #f1f4f6;
+    font-family: Verdana, "Trebuchet MS", sans-serif;
+    font-size: 14px;
+    color: #3b322c;
+    background: #f6f1ea;
 }
 
-a { color: #0b6e69; }
+a { color: #c8551a; }
 
-.header {
-    background: #0b6e69;
-    color: #fff;
-}
+/* ----- Каркас ----- */
+.page { display: flex; min-height: 100vh; }
 
-.header-inner, .content {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 0 20px;
-}
-
-.header-inner {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 60px;
-}
-
-.logo { color: #fff; font-size: 20px; font-weight: bold; text-decoration: none; }
-.logo span { font-weight: normal; font-size: 14px; opacity: .8; margin-left: 8px; }
-
-.nav a {
-    color: #fff;
-    text-decoration: none;
-    margin-left: 22px;
-    padding-bottom: 4px;
-}
-.nav a:hover, .nav a.active { border-bottom: 2px solid #ffd166; }
-
-.content { padding-top: 24px; padding-bottom: 40px; }
-
-h1 { font-size: 24px; margin: 0 0 16px; }
-h2 { font-size: 18px; margin: 0 0 12px; }
-
-.box {
+.side {
+    width: 250px;
+    flex-shrink: 0;
     background: #fff;
-    border: 1px solid #dde3e8;
-    border-radius: 6px;
-    padding: 18px;
-    margin-bottom: 18px;
+    border-right: 3px solid #e8692a;
+    padding: 24px 20px;
 }
 
-.toolbar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 16px; }
-.toolbar .spacer { flex: 1; }
+.main { flex: 1; padding: 28px 34px; max-width: 1150px; }
+
+.logo { display: block; text-decoration: none; color: #3b322c; margin-bottom: 26px; }
+.logo b { display: block; font-size: 22px; letter-spacing: 3px; color: #e8692a; }
+.logo small { color: #8a7d72; font-size: 12px; }
+
+.menu a {
+    display: block;
+    padding: 9px 12px;
+    margin-bottom: 4px;
+    border-radius: 4px;
+    color: #3b322c;
+    text-decoration: none;
+}
+.menu a:hover { background: #fbeee4; }
+.menu a.active { background: #e8692a; color: #fff; }
+
+.side h3 { font-size: 13px; text-transform: uppercase; color: #8a7d72; margin: 28px 0 10px; }
+.side label { display: block; margin-bottom: 6px; cursor: pointer; }
+.side input[type=text], .side select { width: 100%; margin-bottom: 12px; }
+.side .about { margin-top: 40px; font-size: 12px; color: #8a7d72; line-height: 1.6; }
+
+h1 { font-size: 26px; font-weight: normal; margin: 0 0 6px; }
+h2 { font-size: 17px; margin: 0 0 12px; }
+.subtitle { color: #8a7d72; margin: 0 0 22px; }
 
 input[type=text], select {
-    padding: 7px 10px;
-    border: 1px solid #c5cdd4;
+    padding: 7px 9px;
+    border: 1px solid #d6cbbf;
     border-radius: 4px;
+    background: #fff;
     font: inherit;
 }
-input[type=text] { width: 260px; }
 
 .btn {
     display: inline-block;
-    padding: 7px 14px;
-    border: 1px solid #0b6e69;
-    border-radius: 4px;
-    background: #0b6e69;
+    padding: 8px 16px;
+    border: 0;
+    border-radius: 20px;
+    background: #e8692a;
     color: #fff;
     font: inherit;
     text-decoration: none;
     cursor: pointer;
 }
-.btn:hover { background: #095a56; }
-.btn-light { background: #fff; color: #0b6e69; }
-.btn-light:hover { background: #e8f3f2; }
-.btn-red { background: #fff; color: #c0392b; border-color: #c0392b; }
+.btn:hover { background: #c8551a; }
+.btn-gray { background: #e4dbd1; color: #3b322c; }
+.btn-gray:hover { background: #d6cbbf; }
 
-table { width: 100%; border-collapse: collapse; background: #fff; }
-th, td { padding: 8px 10px; border-bottom: 1px solid #e3e8ec; text-align: left; vertical-align: top; }
-th { background: #e8f3f2; font-weight: 600; }
-td.num, th.num { text-align: right; white-space: nowrap; }
-.small { color: #6b7780; font-size: 13px; }
+.message { padding: 10px 14px; margin-bottom: 18px; border-left: 5px solid; background: #fff; }
+.message-ok { border-color: #3c9a5f; }
+.message-error { border-color: #c0392b; }
+.message-info { border-color: #d9a400; }
 
-.tag { font-size: 13px; padding: 2px 8px; border-radius: 10px; background: #e8f3f2; color: #0b6e69; white-space: nowrap; }
-.yes { color: #1e8449; }
-.no { color: #95a0a8; }
+.panel { background: #fff; border-radius: 6px; padding: 20px; margin-bottom: 20px; box-shadow: 0 1px 3px rgba(80, 50, 20, .12); }
 
-.result { width: auto; min-width: 340px; }
-.result td:last-child { text-align: right; font-weight: bold; }
+/* ----- Карточки товаров ----- */
+.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; }
 
-.message { padding: 10px 14px; border-radius: 4px; margin-bottom: 16px; }
-.message-ok { background: #e3f4e8; border: 1px solid #a9d8b6; }
-.message-error { background: #fdecea; border: 1px solid #f1b0a8; }
-.message-info { background: #fff8e1; border: 1px solid #f0d88a; }
+.card {
+    background: #fff;
+    border-radius: 6px;
+    border-top: 5px solid #8a7d72;
+    padding: 14px 16px;
+    box-shadow: 0 1px 3px rgba(80, 50, 20, .12);
+    display: flex;
+    flex-direction: column;
+}
+.card.system-0 { border-top-color: #2f80c1; }
+.card.system-1 { border-top-color: #c0392b; }
+.card.system-2 { border-top-color: #7d5ba6; }
 
-.row-error td:first-child { border-left: 4px solid #c0392b; }
-.row-warning td:first-child { border-left: 4px solid #e0a800; }
+.card .sku { font-size: 12px; color: #8a7d72; }
+.card .name { font-size: 15px; font-weight: bold; margin: 4px 0; color: #3b322c; text-decoration: none; }
+.card .name:hover { color: #c8551a; }
+.card .brand { font-size: 12px; color: #8a7d72; margin-bottom: 10px; }
+.card .bottom { margin-top: auto; display: flex; justify-content: space-between; align-items: flex-end; }
+.card .price { font-size: 18px; font-weight: bold; }
+.card .stock { font-size: 12px; text-align: right; }
+.off { color: #b0a59a; }
 
-.forms { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
-.forms .box { margin-bottom: 0; }
-.forms input[type=text] { width: 100%; box-sizing: border-box; margin-bottom: 10px; }
-.forms input[type=file] { margin-bottom: 10px; }
+.summary-line { margin: 18px 0; color: #8a7d72; }
 
-.details { display: grid; grid-template-columns: 200px 1fr; }
-.details dt, .details dd { margin: 0; padding: 7px 0; border-bottom: 1px solid #e3e8ec; }
-.details dt { color: #6b7780; }
-.price { font-size: 22px; font-weight: bold; color: #0b6e69; margin: 6px 0 14px; }
+/* ----- Импорт ----- */
+.steps { display: flex; gap: 20px; flex-wrap: wrap; }
+.steps .panel { flex: 1; min-width: 300px; }
+.steps input[type=text] { width: 100%; margin: 6px 0 12px; }
+.steps input[type=file] { margin: 6px 0 12px; }
+.hint { color: #8a7d72; font-size: 12px; }
 
-.footer { text-align: center; color: #95a0a8; font-size: 13px; padding: 20px 0; }
+table { border-collapse: collapse; width: 100%; }
+th, td { padding: 8px 10px; text-align: left; border-bottom: 1px solid #eee4da; }
+th { color: #8a7d72; font-weight: normal; font-size: 12px; text-transform: uppercase; }
+.counts { width: auto; }
+.counts td:last-child { font-weight: bold; padding-left: 40px; }
+.warning-row td { background: #fff8e6; }
+.error-row td { background: #fdf0ee; }
+
+/* ----- Карточка товара ----- */
+.props { width: auto; min-width: 420px; }
+.props td:first-child { color: #8a7d72; width: 190px; }
+.big-price { font-size: 26px; color: #e8692a; margin: 10px 0; }
 
 @media (max-width: 800px) {
-    .forms { grid-template-columns: 1fr; }
-    .header-inner { flex-direction: column; height: auto; padding: 10px 20px; }
-    .nav a { margin: 0 10px; }
+    .page { flex-direction: column; }
+    .side { width: auto; border-right: 0; border-bottom: 3px solid #e8692a; }
+    .main { padding: 20px; }
 }
