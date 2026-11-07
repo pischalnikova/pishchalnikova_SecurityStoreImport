@@ -1,0 +1,3 @@
+sku,name,description,price,currency,category_name,stock,image_url,is_active,brand,system_type,model,ip_rating
+GRD-2201,Извещатель охранный Фотон-12,Объёмный оптико-электронный извещатель,890,RUB,Извещатели,25,,true,Сибирский Арсенал,Охранная сигнализация,Фотон-12,IP41
+GRD-3301,Контроллер замка Z-5R,Автономный контроллер на 2000 ключей,1350,RUB,Контроллеры СКУД,18,,true,IronLogic,СКУД,Z-5R,

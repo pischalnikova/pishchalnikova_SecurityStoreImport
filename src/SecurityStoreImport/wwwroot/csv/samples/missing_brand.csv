@@ -1,0 +1,2 @@
+﻿sku,name,description,price,currency,category_name,stock,image_url,is_active,brand,system_type,model,ip_rating
+GRD-3101,Кнопка выхода,Кнопка выхода для СКУД,450,RUB,Кнопки выхода,30,,true,,СКУД,ST-EX110,

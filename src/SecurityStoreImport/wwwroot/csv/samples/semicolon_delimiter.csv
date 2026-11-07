@@ -1,0 +1,3 @@
+﻿sku;name;description;price;currency;category_name;stock;image_url;is_active;brand;system_type;model;ip_rating
+GRD-1201;Блок питания 12 В 5 А;Блок питания для камер в боксе;1290,50;RUB;Электропитание;20;;1;Бастион;Видеонаблюдение;СКАТ-1200С;IP20
+GRD-3201;Электромагнитный замок 280 кг;Замок с датчиком состояния двери;3450;RUB;Замки;14;;1;Smartec;СКУД;ST-EL280;
