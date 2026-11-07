@@ -1,0 +1,3 @@
+﻿sku,name,description,price,currency,category_name,stock,image_url,is_active,brand,system_type,model,ip_rating
+GRD-1001,IP-камера уличная 4 Мп,Цилиндрическая камера с ИК-подсветкой до 30 м,8490,RUB,IP-камеры,18,/images/hik-2043.jpg,true,Hikvision,Видеонаблюдение,DS-2CD2043G2-I,IP67
+GRD-1006,Видеорегистратор 16 каналов,Сетевой видеорегистратор с аналитикой на 16 камер,38900,RUB,Видеорегистраторы,5,/images/trassir-16.jpg,true,Trassir,Видеонаблюдение,MiniNVR AF 16,
